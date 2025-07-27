@@ -11,7 +11,7 @@ export const signUp = async (req, res, next) => {
   try {
     session.startTransaction();
 
-    const { name, email, password,phoneNo,gender } = req.body;
+    const { name, email, password, phoneNo, gender } = req.body;
 
     // Check if user already exists
     const existingUser = await User.findOne({ email }).session(session);
@@ -33,7 +33,7 @@ export const signUp = async (req, res, next) => {
           email,
           password: hashedPassword,
           gender,
-          phoneNo
+          phoneNo,
         },
       ],
       { session }
@@ -66,7 +66,7 @@ export const signUp = async (req, res, next) => {
 // implement of signin logic
 export const signIn = async (req, res, next) => {
   try {
-    const { email, password, } = req.body;
+    const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
       const error = new Error("User not Found");
@@ -90,7 +90,7 @@ export const signIn = async (req, res, next) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
+
       path: "/",
       maxAge: 360 * 60 * 60 * 1000,
     });
@@ -109,11 +109,10 @@ export const signIn = async (req, res, next) => {
 
 export const signOut = async (req, res, next) => {
   try {
-    
     res.clearCookie("token", {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
+
       path: "/",
     });
     // console.log('Logout')
