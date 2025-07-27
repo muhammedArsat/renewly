@@ -17,7 +17,7 @@ app.use(arjectMiddleware);
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://renewly.onrender.com",
+    origin: FRONTEND_URL,
     credentials: true,
   })
 );
