@@ -37,7 +37,6 @@ const Register = () => {
       [name]: value,
     });
   };
- 
 
   return (
     <div className="flex justify-center items-center min-h-[91vh] md:min-h-screen p-2">
@@ -47,8 +46,8 @@ const Register = () => {
           Create your account here
         </h1>
         <p className="font-inter text-lg text-center font-normal">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum,
-          necessitatibus.
+          Discover a better way to organize and grow. We’re excited to have you
+          onboard.
         </p>
       </div>
 

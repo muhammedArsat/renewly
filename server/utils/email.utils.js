@@ -18,7 +18,7 @@ export const sendReminderEmail = async (
 
     // Email content
     const mailOptions = {
-      from: `"Subscription Tracker" <${EMAIL_USER}>`,
+      from: `"Renewly" <${EMAIL_USER}>`,
       to: toEmail,
       subject: `Reminder: Your ${subscriptionName} subscription expires soon`,
       html: `
@@ -55,7 +55,7 @@ export const sendReminderEmail = async (
       <hr style="margin: 30px 0; border: none; border-top: 1px solid #ecf0f1;" />
 
       <p style="font-size: 13px; color: #95a5a6; text-align: center;">
-        &copy; ${new Date().getFullYear()} Subscription Tracker · All rights reserved
+        &copy; ${new Date().getFullYear()} Renewly · All rights reserved
       </p>
     </div>
   `,

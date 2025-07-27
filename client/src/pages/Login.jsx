@@ -37,7 +37,6 @@ const Login = () => {
         toast.success(res.dataw);
         navigate("/home");
       }
-      
     } catch (err) {
       console.log(err);
       toast.error(err.response.data.error);
@@ -58,7 +57,7 @@ const Login = () => {
             Welcome Back
           </h1>
           <h3 className="text-center text-light-textSecondary dark:text-dark-textSecondary font-poppins font-medium text-base">
-            Lorem ipsum dolor sit amet consectetur adipisicing.
+            Sign in to manage your subscriptions.
           </h3>
         </div>
         {/* login form */}
@@ -134,8 +133,8 @@ const Login = () => {
           Welcome back
         </h1>
         <p className="text-center font-inter font-normal text-lg">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit,
-          sint.
+          Your subscription dashboard is one step away. Stay in control of every
+          recurring expense.
         </p>
       </div>
     </div>

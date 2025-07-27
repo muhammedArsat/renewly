@@ -99,19 +99,27 @@ const Navbar = () => {
       >
         <div className="flex flex-col gap-3">
           <li
-            className={`flex items-center gap-1 py-3 px-3  ${
+            className={`flex items-center gap-1 py-3 px-1 w-full ${
               path === "/home"
-                ? "bg-light-button dark:bg-dark-button text-white"
+                ? "bg-gradient-to-r from-light-button to-purple-300 text-white border-l-4 border-purple-300"
                 : ""
-            }`}
+            } `}
+            onClick={() => navigate("/home")}
           >
-            <LayoutDashboard strokeWidth={1} />
-            <span>Dashboard </span>
+            <LayoutDashboard strokeWidth={1.5} />
+            <span>Dashboard</span>
           </li>
 
-          <li className="flex items-center gap-1 py-3 px-3">
-            <Calendar1 strokeWidth={1} />
-            <span>Calender</span>
+          <li
+            className={`flex items-center gap-1 py-3 px-1 w-full ${
+              path === "/calendar"
+                ? "bg-gradient-to-r from-light-button to-purple-300 dark:bg-dark-button border-l-4 text-white border-purple-300"
+                : ""
+            } `}
+            onClick={() => navigate("/calendar")}
+          >
+            <Calendar1 strokeWidth={1.5} />
+            <span> Calender</span>
           </li>
         </div>
         <div>
