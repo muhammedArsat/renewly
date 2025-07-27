@@ -3,7 +3,7 @@ import Subscription from "../models/subscription.model.js";
 import { sendReminderEmail } from "../utils/email.utils.js";
 
 export const startExpireAndNotifyJob = () => {
-  cron.schedule("* * * * *", async () => {
+  cron.schedule("0 8 * * *", async () => {
     const now = new Date();
     console.log("🔁 Cron running at", now.toISOString());
 
