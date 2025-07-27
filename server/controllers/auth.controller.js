@@ -90,7 +90,7 @@ export const signIn = async (req, res, next) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
+      sameSite: "none",
       path: "/",
       maxAge: 360 * 60 * 60 * 1000,
     });
@@ -112,7 +112,7 @@ export const signOut = async (req, res, next) => {
     res.clearCookie("token", {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
+      sameSite: "none",
       path: "/",
     });
     // console.log('Logout')
