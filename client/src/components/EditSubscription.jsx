@@ -104,7 +104,7 @@ const EditSubscription = ({
             </label>
             <input
               type="date"
-              className="input-base "
+              className="input-base w-full "
               name="startDate"
               value={formData.startDate}
               onChange={handleChange}
@@ -164,7 +164,7 @@ const EditSubscription = ({
             isNewSubscription ? handleClick() : handleClick(subscriptionId);
           }}
         >
-          {loading ? "Loading..." : "Update"}
+          {loading ? "Loading..." : isNewSubscription ? 'Create':'Update'}
         </button>
       </div>
     </div>
