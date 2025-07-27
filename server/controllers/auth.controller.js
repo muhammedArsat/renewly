@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { JWT_EXPIRES_IN, JWT_SECRET } from "../config/env.js";
+import { JWT_EXPIRES_IN, JWT_SECRET, NODE_ENV } from "../config/env.js";
 
 // implement of signup logic
 export const signUp = async (req, res, next) => {
@@ -87,10 +87,11 @@ export const signIn = async (req, res, next) => {
     const token = jwt.sign(payload, JWT_SECRET, {
       expiresIn: JWT_EXPIRES_IN,
     });
+    const isProd = NODE_ENV === "PRODUCTION";
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "Lax",
+      secure: isProd,
+      sameSite: isProd ? "None" : "Lax",
       path: "/",
       maxAge: 360 * 60 * 60 * 1000,
     });
@@ -109,10 +110,12 @@ export const signIn = async (req, res, next) => {
 
 export const signOut = async (req, res, next) => {
   try {
+    const isProd = NODE_ENV === "PRODUCTION";
+
     res.clearCookie("token", {
       httpOnly: true,
-      secure: true,
-      sameSite: "Lax",
+      secure: isProd,
+      sameSite:isProd?'None': "Lax",
       path: "/",
     });
     // console.log('Logout')
