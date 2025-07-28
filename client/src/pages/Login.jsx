@@ -109,8 +109,8 @@ const Login = () => {
           </div>
 
           <div>
-            <button className="action-btn w-full" type="submit">
-              {loading ? "loading" : "Sign in"}
+            <button className="action-btn w-full disabled:bg-gray-400 disabled:cursor-not-allowed" type="submit" disabled={loading}>
+              {loading ? "loading..." : "Sign in"}
             </button>
           </div>
 

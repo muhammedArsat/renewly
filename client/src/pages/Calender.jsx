@@ -80,7 +80,7 @@ const MyCalendar = () => {
                       ? "#27272a"
                       : "#e5e7eb"
                     : isToday
-                    ? "rgba(128, 128, 128, 0.15)"
+                    ? "#c3a9fc"
                     : undefined,
                   color: isExtraDay ? "#111827" : undefined,
                   borderRadius: isToday ? "4px" : undefined,
@@ -111,11 +111,14 @@ const MyCalendar = () => {
         : "opacity-0 invisible pointer-events-none"
     }
   `}
+  onClick={()=>setSelectedEvent(false)}
       >
         <div
           className={`bg-white dark:bg-dark-card p-6 rounded-xl shadow-xl w-80 text-center transition-transform duration-300 transform
     ${selectedEvent ? "block" : "hidden"}
+    
   `}
+  onClick={(e)=>e.stopPropagation()}
         >
           {selectedEvent && (
             <>

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Searchbar from "../components/Searchbar";
 import SubscriptionCard from "../components/SubscriptionCard";
 import EditSubscription from "../components/EditSubscription";
-import { X, Plus, IndianRupeeIcon } from "lucide-react";
+import { X, Plus, IndianRupeeIcon, Trash2 } from "lucide-react";
 import {
   deleteSubscriptionById,
   getSubscriptionByUser,
@@ -30,10 +30,13 @@ const Dashboard = () => {
 
   const [isEditTabOpen, setIsEditTabOpen] = useState(false);
   const [isNewTabOpen, setIsNewTabOpen] = useState(false);
+  const [isDeleteTabOpen, setIsDeleteTapOpen] = useState(false);
   const [activeSubscriptions, setActiveSubscriptions] = useState([]);
   const [expiredSubscriptions, setExpiredSubscriptions] = useState([]);
   const [selectedSubscription, setSelectedSubscription] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [deleteSubscriptionId, setDeleteSubscriptionId] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const { id } = useContext(Authcontext);
@@ -56,6 +59,10 @@ const Dashboard = () => {
     frequency: "",
     startDate: "",
   });
+
+  const handleDeleteTapOpen = () => {
+    setIsDeleteTapOpen(!isDeleteTabOpen);
+  };
 
   const handleChangeInEdit = (e) => {
     const { name, value } = e.target;
@@ -95,9 +102,14 @@ const Dashboard = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Capitalize first letter only
+    const formattedValue =
+      name === "name" ? value.charAt(0).toUpperCase() + value.slice(1) : value;
+
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: formattedValue,
     });
   };
 
@@ -105,8 +117,10 @@ const Dashboard = () => {
     try {
       setLoading(true);
       const { bg, text } = getRandomColor();
+
       const newFormData = {
         ...formData,
+
         bg,
         text,
       };
@@ -124,7 +138,9 @@ const Dashboard = () => {
           bg: "",
           text: "",
         });
+        setIsNewTabOpen(false);
         fetchUserActiveSub(id);
+        fetchUserExpiredSub(id);
       }
     } catch (err) {
       toast.error(err.response.data.error);
@@ -150,6 +166,7 @@ const Dashboard = () => {
       if (res.success) {
         setIsEditTabOpen(false);
         fetchUserActiveSub(id);
+        fetchUserExpiredSub(id);
         toast.success("Updated successfully");
       }
     } catch (err) {
@@ -159,14 +176,32 @@ const Dashboard = () => {
 
   const deleteSubscription = async (id) => {
     try {
-      const res = await deleteSubscriptionById(id);
-      if (res.success) {
-        toast.success("Deleted Successfully");
-        const deletedSub = activeSubscriptions.filter((d) => d._id !== id);
-        setActiveSubscriptions(deletedSub);
-      }
+      setIsDeleteTapOpen(true);
+      setDeleteSubscriptionId(id);
     } catch (err) {
       toast.error(err.response.data.error);
+    }
+  };
+
+  const ActualDeleteSubscription = async () => {
+    try {
+      setLoading(true);
+      const res = await deleteSubscriptionById(deleteSubscriptionId);
+      if (res.success) {
+        toast.success("Deleted Successfully");
+        const deletedSub = activeSubscriptions.filter(
+          (d) => d._id !== deleteSubscriptionId
+        );
+        const deletedExpiredSub = expiredSubscriptions.filter(
+          (d) => d._id !== deleteSubscriptionId
+        );
+        setActiveSubscriptions(deletedSub);
+        setExpiredSubscriptions(deletedExpiredSub);
+        setIsDeleteTapOpen(false);
+      }
+    } catch (err) {
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -201,7 +236,7 @@ const Dashboard = () => {
   }, [activeSubscriptions]);
 
   return (
-    <div className="flex flex-col gap-2 mx-auto max-h-[550px] md:min-h-[85vh] overflow-auto">
+    <div className="flex flex-col gap-2 mx-auto max-h-dvh  md:min-h-[95vh] overflow-auto ">
       <div>
         <h1 className="font-poppins text-2xl font-semibold mb-2">
           Your subscription
@@ -358,6 +393,37 @@ const Dashboard = () => {
           />
         </div>
       </div>
+      {isDeleteTabOpen && (
+        <div
+          className="inset-0 min-h-screen bg-black/40 fixed z-20 flex justify-center items-center transition-all duration-300 "
+          onClick={() => setIsDeleteTapOpen(false)}
+        >
+          <div
+            className={`w-[20rem] bg-light-card rounded-lg min-h-[10rem] flex justify-center items-center flex-col gap-2 transition-all duration-300 ${
+              isDeleteTabOpen ? "opacity-100 visible" : "opacity-0 invisible"
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h1 className="text-center font-poppins">Do you want to delete?</h1>
+            <div className="flex gap-2 justify-center items-center">
+              <button
+                className="bg-gray-400 font-inter font normal text-white flex justify-center items-center p-2 rounded-lg cursor-pointer"
+                onClick={() => setIsDeleteTapOpen(false)}
+              >
+                <X /> Cancel
+              </button>
+              <button
+                className="bg-light-error font-inter font-semibold text-white flex justify-center items-center p-2 rounded-lg cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed "
+                onClick={() => ActualDeleteSubscription()}
+                disabled={loading}
+              >
+                <Trash2 />
+                {loading ? "loading" : "Delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

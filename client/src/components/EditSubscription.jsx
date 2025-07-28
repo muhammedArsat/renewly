@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Layers, IndianRupee, Repeat, CalendarClock, Tags, CreditCardIcon } from "lucide-react";
+import {
+  Layers,
+  IndianRupee,
+  Repeat,
+  CalendarClock,
+  Tags,
+  CreditCardIcon,
+} from "lucide-react";
 import { toast } from "react-toastify";
 import { findSubscriptionById } from "../apis/SubscriptionApi";
 const EditSubscription = ({
@@ -88,9 +95,10 @@ const EditSubscription = ({
               value={formData.frequency}
               onChange={handleChange}
             >
-              <option value="" disabled selected>
-                --select frequency--
+              <option value="" disabled>
+                --Select frequency--
               </option>
+
               <option value="monthly">Monthly</option>
               <option value="yearly">Yearly</option>
             </select>
@@ -126,9 +134,10 @@ const EditSubscription = ({
                 value={formData.category}
                 onChange={handleChange}
               >
-                <option value="" disabled selected>
-                  --select category--
+                <option value="" disabled>
+                  --Select category--
                 </option>
+
                 <option value="Entertainment">Entertainment</option>
                 <option value="Lifestyle">Lifestyle</option>
                 <option value="Sports">Sports</option>
@@ -137,7 +146,9 @@ const EditSubscription = ({
               </select>
             </div>
             <div className="flex flex-col gap-2 w-full relative">
-              <span className="absolute top-11 left-2"><CreditCardIcon/></span>
+              <span className="absolute top-11 left-2">
+                <CreditCardIcon />
+              </span>
               <label htmlFor="paymentMethod" className="label-base text-left">
                 Payment method
               </label>
@@ -147,8 +158,8 @@ const EditSubscription = ({
                 value={formData.paymentMethod}
                 onChange={handleChange}
               >
-                <option value="" disabled selected>
-                  --select payment method--
+                <option value="" disabled>
+                  --Select payment method--
                 </option>
                 <option value="Upi">Upi</option>
                 <option value="Credit card">Credit card</option>
@@ -158,13 +169,13 @@ const EditSubscription = ({
           </div>
         )}
         <button
-          className="action-btn mt-2"
+          className="action-btn mt-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
           disabled={loading}
           onClick={() => {
             isNewSubscription ? handleClick() : handleClick(subscriptionId);
           }}
         >
-          {loading ? "Loading..." : isNewSubscription ? 'Create':'Update'}
+          {loading ? "Loading..." : isNewSubscription ? "Create" : "Update"}
         </button>
       </div>
     </div>

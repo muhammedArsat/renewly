@@ -99,6 +99,8 @@ const SubscriptionCard = ({
           <span className="font-inter">{renewalData.slice(0, 10)}</span>
         </div>
       </div>
+
+     
     </>
   );
 };

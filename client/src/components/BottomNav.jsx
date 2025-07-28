@@ -26,11 +26,10 @@ const BottomNav = ({ isNavbarExpand, isMobile }) => {
         <li className="flex items-center gap-1 py-2 px-3">
           <ThemeButton isNavbarExpand={isNavbarExpand} isMobile={isMobile} />
         </li>
-        <li className="flex items-center gap-1 py-2 px-3 text-light-error hover:bg-red-200 hover:text-black">
+        <li className="flex items-center gap-1 py-2 px-3 text-light-error hover:bg-red-200 hover:text-black" onClick={handleLogout}>
           <LogOut strokeWidth={1} onClick={handleLogout} />
           <span
             className={`${!isNavbarExpand || isMobile ? "block" : "hidden"}`}
-            onClick={handleLogout}
           >
             Logout
           </span>

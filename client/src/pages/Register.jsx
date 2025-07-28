@@ -7,6 +7,7 @@ import { signUp } from "../apis/AuthApi";
 import { useNavigate } from "react-router-dom";
 const Register = () => {
   const [step, setStep] = useState(0);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -18,15 +19,15 @@ const Register = () => {
 
   const handleRegister = async () => {
     try {
-      if (formData.password < 6) {
-        return toast.warn("password must be greater than 6 character");
-      }
+      setLoading(true);
       const res = await signUp(formData);
       if (res.success) {
         navigate("/");
       }
     } catch (err) {
       toast.error(err.response.data.error);
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -95,6 +96,7 @@ const Register = () => {
                   formData={formData}
                   handleChange={handleChange}
                   handleRegister={handleRegister}
+                  loading={loading}
                 />
                 <div className="flex justify-between items-center ">
                   <button
