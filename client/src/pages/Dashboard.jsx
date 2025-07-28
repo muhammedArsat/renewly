@@ -399,7 +399,7 @@ const Dashboard = () => {
           onClick={() => setIsDeleteTapOpen(false)}
         >
           <div
-            className={`w-[20rem] bg-light-card rounded-lg min-h-[10rem] flex justify-center items-center flex-col gap-2 transition-all duration-300 ${
+            className={`w-[20rem] bg-light-card dark:bg-dark-card rounded-lg min-h-[10rem] flex justify-center items-center flex-col gap-2 transition-all duration-300 ${
               isDeleteTabOpen ? "opacity-100 visible" : "opacity-0 invisible"
             }`}
             onClick={(e) => e.stopPropagation()}
